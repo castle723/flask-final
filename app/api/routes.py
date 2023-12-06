@@ -20,12 +20,12 @@ def create_book(current_user_token):
 
     print(f'BIG TESTER: {current_user_token.token}')
 
-    book = Book(title, author, ISBN_number, page_number, cover_type, user_token = user_token )
+    item = Book(title, author, ISBN_number, page_number, cover_type, user_token = user_token )
 
-    db.session.add(book)
+    db.session.add(item)
     db.session.commit()
 
-    response = book_schema.dump(book)
+    response = book_schema.dump(item)
     return jsonify(response)
 
 @api.route('/books', methods = ['GET'])
@@ -41,8 +41,8 @@ def get_book(current_user_token):
 def get_book_two(book_user_token, id):
     fan = book_user_token.token
     if fan == book_user_token.token:
-        car = Book.query.get(id)
-        response = book_schema.dump(car)
+        book = Book.query.get(id)
+        response = book_schema.dump(book)
         return jsonify(response)
     else:
         return jsonify({"message": "Valid Token Required"}),401
